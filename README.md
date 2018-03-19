@@ -22,10 +22,10 @@ npm run unit
 
 # run all tests
 npm test
-```
 
 #Git workflow
 git pull
 git add .
 git commit -m "Message"
 git push -u origin [branch-name]
+```
