@@ -10,6 +10,7 @@
         type='text'
         onfocus="this.placeholder = ''"
         onblur="this.placeholder = 'Naam, studie, plaats...'" />
+    <button v-on:click="updateMessage">Greet</button>
     <div class='search-results-container'>
         <ul>
           <li v-for='bla in message' :key='bla'>
@@ -26,9 +27,17 @@
 <script>
 export default {
   name: 'Search',
-  data () {
+  data: () => {
     return {
       message: ['bla', 'foo', 'bar']
+    }
+  },
+  methods: {
+    updateMessage () {
+      fetch('http://gateway.kamerbaas.nl/search?term=jaap')
+        .then(function (response) {
+          console.log(response.json())
+        })
     }
   }
 }
