@@ -2,31 +2,16 @@ const URL_SEARCH_SERVICE = 'http://gateway.kamerbaas.nl/search?term=';
 
 $(document)
     .ready(function() {
-        $('.masthead')
-            .visibility({
-                once: false,
-                onBottomPassed: function() {
-                    $('.fixed.menu').transition('fade in');
-                },
-                onBottomPassedReverse: function() {
-                    $('.fixed.menu').transition('fade out');
-                }
-            })
-        ;
-
-        $('.ui.sidebar')
-            .sidebar('attach events', '.toc.item')
-        ;
-    })
-;
-
-$(document)
-    .ready(function() {
         document.getElementById('btn-search').onclick = function(e){
             e.preventDefault();
             if(document.getElementById('search-input').value !== ''){
                 fetch(URL_SEARCH_SERVICE + document.getElementById('search-input').value)
+                    .then(ShowLoadingIcon())
                     .then(function(response) {
+                        if (response.status !== 200) {
+                            SetMessage("Error, status code: " + response.status);
+                            return;
+                        }
                         response.json().then(function(data) {
                             HandleResponse(data.hits);
                         });
@@ -50,7 +35,7 @@ function AddCard(object){
     var div = document.createElement('div');
     div.className = 'col-md-4 col-sm-6 col-xs-12';
     div.innerHTML =
-        '        <article class=\'material-card Red\'>\n' +
+        '        <article class=\'material-card Blue\'>\n' +
         '            <h2>\n' +
         '                <span>' + object.name + '</span>\n' +
         '                <strong>\n' +
@@ -83,7 +68,7 @@ function AddCard(object){
 function SetMessage(message){
     document.getElementById('result-cards').innerHTML = '';
     var div = document.createElement('div');
-    div.className = 'col-md-12';
+    div.className = 'user_message';
     div.innerHTML = '<h1>' + message + '</h1>';
 
     document.getElementById('result-cards').appendChild(div);
@@ -140,5 +125,13 @@ function HandleCardEvents() {
 
 function HandleFalseInput(){
     document.getElementById('search-input').style.borderColor = 'red';
+}
+
+function ShowLoadingIcon(){
+    document.getElementById('result-cards').innerHTML = '';
+    var div = document.createElement('div');
+    div.className = 'loader';
+
+    document.getElementById('result-cards').appendChild(div);
 }
 

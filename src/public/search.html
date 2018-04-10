@@ -3,27 +3,18 @@
 <head>
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="css/search.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome/font-awesome.css">
     <script src="/jquery/jquery.js"></script>
     <script src="semantic/dist/semantic.min.js"></script>
     <script src="/js/search.js"></script>
     <script src="/js/login.js"></script>
-    <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css'>
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="174042023883-m4tocm3ccalf5vjgu9i7j96vduug32bo.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-<div class="ui huge top fixed hidden menu">
-    <div class="ui container">
-        <a href="/" class="item"><i class='fa fa-fw fa-home'></i>Home</a><a class="active item"><i class='fa fa-fw fa-search'></i>Zoeken</a>
-        <div class="right menu">
-            <div class="item">
-                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
         <div class="ui container">
@@ -38,8 +29,8 @@
     <section class="container">
         <div class="row">
             <form class="form-inline col-xs-12 search-box">
-                <input id="search-input" class="form-control search-input" type="text" placeholder="Search" aria-label="Search">
-                <button id="btn-search" class="btn aqua-gradient btn-rounded btn-sm my-0 btn-search" type="submit">Search</button>
+                <input id="search-input" class="form-control search-input" type="text" placeholder="Zoeken" aria-label="Search">
+                <button id="btn-search" class="btn aqua-gradient btn-rounded btn-sm my-0 btn-search" type="submit">Zoeken</button>
             </form>
         </div>
     </section>
@@ -47,7 +38,7 @@
         <div class="page-header">
         </div>
         <div class="row active-with-click" id="result-cards">
-            <div class="col-md-12">
+            <div class="user_message">
                 <h1>Geen resultaten.</h1>
             </div>
         </div>
