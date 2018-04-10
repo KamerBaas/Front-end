@@ -1,31 +1,11 @@
-# vuetest
+Gebruik:
 
-> test of vue app
+In development mode met hot reloading:
 
-## Build Setup
+`docker run -it --rm -p 8080:8080 -v $PWD/src:/src -w /src node:8 bash -c "npm install & npm run dev"`
 
-``` bash
-# install dependencies
-npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
 
-# build for production with minification
-npm run build
+Standaard poort 8080
 
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-
-#Git workflow
-git pull
-git add .
-git commit -m "Message"
-git push -u origin [branch-name]
-```
+localhost:8080/login.html
