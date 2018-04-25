@@ -1,8 +1,12 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 
 const PORT = 8080;
+const SPORT = 4330;
 const HOST = '0.0.0.0';
 
 app.get('/', function(req, res) {
@@ -28,5 +32,17 @@ app.use('/node_modules/semantic-ui-calendar/', express.static(__dirname + '/node
 
 app.use(express.static('public'));
 
-app.listen(PORT, HOST);
+const options = {
+    cert: fs.readFileSync(__dirname + '/ssl/kamerbaas.nl/fullchain.pem'),
+    key: fs.readFileSync(__dirname + '/ssl/kamerbaas.nl/privkey.pem'),
+    ca: fs.readFileSync(__dirname + '/ssl/kamerbaas.nl/chain.pem')
+};
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(options, app);
+
+httpServer.listen(PORT, HOST);
+httpsServer.listen(SPORT, HOST);
+
+//app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
