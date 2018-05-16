@@ -9,13 +9,13 @@
   },
   "author": "Dimitri Hooftman",
   "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  },
   "dependencies": {
     "express": "^4.16.3",
     "jquery": "^3.3.1",
     "semantic-ui": "^2.3.1",
     "semantic-ui-calendar": "0.0.8"
-  },
-  "devDependencies": {
-    "nodemon": "^1.17.3"
   }
 }

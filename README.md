@@ -2,7 +2,7 @@ Gebruik:
 
 In development mode met hot reloading:
 7
-`docker run -it --rm -p 8080:8080 -v $PWD/src:/src -w /src node:8 bash -c "npm install && npm install nodemon -g && npm run dev"`
+`docker run -it --rm -p 8080:8080 -v $PWD/src:/src -w /src node:8 bash -c "npm install --no-bin-links && npm install nodemon -g && npm run dev"`
 
 ** FOR WINDOWS USERS
 ip-adres van container vinden, die gebruiken als vervanging van localhost.
