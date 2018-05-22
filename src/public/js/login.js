@@ -1,17 +1,32 @@
 const URL_AUTHENTICATION_SERVICE = 'http://gateway.kamerbaas.nl/auth/';
 
-function onSignIn(googleUser) {
-    // Useful data for your client-side scripts:
-    var profile = googleUser.getBasicProfile();
+//let user;
+var config = {
+    apiKey: "AIzaSyDgW1UpBaT4XQ8Cq81ztyi3StPsVQaGwO4",
+    authDomain: "kamerbaas-nots.firebaseapp.com",
+    databaseURL: "https://kamerbaas-nots.firebaseio.com",
+    projectId: "kamerbaas-nots",
+    storageBucket: "",
+    messagingSenderId: "833496987505"
+};
+firebase.initializeApp(config);
 
-    // The ID token you need to pass to your backend:
-    var id_token = googleUser.getAuthResponse().id_token;
+$(document).ready(() => {
+    $('#loginButton').click((e) => {
+        e.preventDefault();
+        signIn();
+    })
+});
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', URL_AUTHENTICATION_SERVICE);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function() {
-        //console.log('Signed in as: ' + xhr.responseText);
-    };
-    xhr.send(JSON.stringify({idtoken: id_token}));
+const signIn = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(() => {
+        window.location = "/profile";
+    }).catch((error) => {
+        console.error(error.message);
+    });
+}
+
+const getIdToken = () => {
+    return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
 }
