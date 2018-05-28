@@ -14,11 +14,11 @@
 //     educationLevel: { type: String, default: ''}
 // });
 
-const URL_DETAILED_PROFILE_SERVICE = 'http://gateway.kamerbaas.nl/profile/';
+const URL_DETAILED_PROFILE_SERVICE = 'http://gateway.kamerbaas.nl/search?term=';
 
 $(document)
     .ready(function() {
-            fetch(URL_SEARCH_SERVICE + $.urlParam('id'))
+            fetch(URL_DETAILED_PROFILE_SERVICE + $.urlParam('id'))
                 .then(ShowLoadingIcon())
                 .then(function (response) {
                     if (response.status !== 200) {
@@ -41,28 +41,64 @@ $.urlParam = function(name){
 
 function HandleResponse(profile_list){
     if(profile_list.length > 0){
-        document.getElementById('result-cards').innerHTML = '';
+        document.getElementById('profileform').innerHTML = '';
         for(var i = 0; i < profile_list.length; i++)
         {
             var to_show_object = {
+                isLandlord: profile_list[i].isLandlord,
                 name: profile_list[i].name,
-                bio: profile_list[i].bio,
-                url: 'https://christianlifecoachnow.com/wp-content/uploads/2016/12/Blank-Photo-768x768.png',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+                title: profile_list[i].title,
+                description: profile_list[i].description,
+                gender: profile_list[i].gender,
+                dateOfBirth: profile_list[i].dateOfBirth,
+                spokenLanguages: profile_list[i].spokenLanguages,
+                livesInCountry: profile_list[i].livesInCountry,
+                residence: profile_list[i].residence,
+                status: profile_list[i].status,
+                smokeInHouse: profile_list[i].smokeInHouse,
+                studentenVereniging: profile_list[i].studentenVereniging,
+                educationLevel: profile_list[i].educationLevel
             };
-            AddCard(to_show_object);
         }
+        AddProfile(to_show_object);
     } else {
         SetMessage('Geen resultaten.')
     }
-    HandleCardEvents();
+}
+
+
+function AddProfile(object){
+    var div = document.createElement('div');
+    div.innerHTML =
+        '       <h4 class="ui attached top block header">Volledige naam</h4>\n' +
+        '       <div class="ui attached segment">' + object.name + '</div>\n' +
+        '       <h4 class="ui attached block header">Beschrijving</h4>\n' +
+        '       <div class="ui attached segment">' + object.description + '</div>\n' +
+        '       <h4 class="ui attached block header">Geslacht</h4> \n' +
+        '       <div class="ui attached segment">' + object.gender + '</div>\n' +
+        '       <h4 class="ui attached block header">Geboortedatum</h4>\n' +
+        '       <div class="ui attached segment">' + object.dateOfBirth + '</div>\n' +
+        '       <h4 class="ui attached block header">Gesproken talen</h4>\n'  +
+        '       <div class="ui attached segment">' + object.spokenLanguages + '</div>\n' +
+        '       <h4 class="ui attached block header">Land</h4>\n' +
+        '       <div class="ui attached segment">' + object.livesInCountry + '</div>\n' +
+        '       <h4 class="ui attached block header">Status</h4>\n' +
+        '       <div class="ui attached segment">' + object.status + '</div>\n' +
+        '       <h4 class="ui attached block header">Roker</h4>\n' +
+        '       <div class="ui attached segment">' + object.smokeInHouse + '</div>\n' +
+        '       <h4 class="ui attached block header">Studentenvereniging</h4>\n' +
+        '       <div class="ui attached segment">' + object.Studentenvereniging + '</div>\n' +
+        '       <h4 class="ui attached block header">Opleidingsniveau</h4>\n' +
+        '       <div class="ui attached segment">' + object.educationLevel + '</div>\n'
+
+    document.getElementById('profileform').appendChild(div);
 }
 
 
 function ShowLoadingIcon(){
-    document.getElementById('result-cards').innerHTML = '';
+    document.getElementById('profileform').innerHTML = '';
     var div = document.createElement('div');
     div.className = 'loader';
 
-    document.getElementById('result-cards').appendChild(div);
+    document.getElementById('profileform').appendChild(div);
 }
