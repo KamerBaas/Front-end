@@ -17,7 +17,6 @@
 const URL_DETAILED_PROFILE_SERVICE = 'http://gateway.kamerbaas.nl/search?term=';
 
 $(document)
-<<<<<<< HEAD
     .ready(() => {
         $('.ui.selection.dropdown').dropdown();
         $('#example2').calendar({
@@ -30,6 +29,21 @@ $(document)
             } else {
                 window.user = undefined;
             }
+        });
+
+
+        fetch(URL_DETAILED_PROFILE_SERVICE + $.urlParam('id'))
+            .then(ShowLoadingIcon())
+            .then(function (response) {
+                if (response.status !== 200) {
+                    SetMessage("Error, status code: " + response.status);
+                    return;
+                }
+                response.json().then(function (data) {
+                    HandleResponse(data.hits);
+                });
+            }).catch(function () {
+            SetMessage('Network error.');
         });
     })
 ;
@@ -53,24 +67,7 @@ const getUserFromServer = (user) => {
             console.error(err.message);
         })
     })
-}
-=======
-    .ready(function() {
-            fetch(URL_DETAILED_PROFILE_SERVICE + $.urlParam('id'))
-                .then(ShowLoadingIcon())
-                .then(function (response) {
-                    if (response.status !== 200) {
-                        SetMessage("Error, status code: " + response.status);
-                        return;
-                    }
-                    response.json().then(function (data) {
-                        HandleResponse(data.hits);
-                    });
-                }).catch(function () {
-                SetMessage('Network error.');
-            });
-    })
-;
+};
 
 $.urlParam = function(name){
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -140,4 +137,3 @@ function ShowLoadingIcon(){
 
     document.getElementById('profileform').appendChild(div);
 }
->>>>>>> feature/Aparte_profile_pagina_voor_weergeven_zoekresultaat
