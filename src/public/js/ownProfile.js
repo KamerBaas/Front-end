@@ -17,14 +17,9 @@
 $(document)
     .ready(function() {
 
-        let id = $.url.attr('id');
-        
-        if(id === null) {
-            getPersonalProfile();
-        }
-        else {
-            getProfile(id);
-        }
+        var userId = localStorage.getItem('user_id');
+
+        getPersonalProfile(userId);
 
         /*$('.ui.selection.dropdown').dropdown();
         $('#example2').calendar({
@@ -33,7 +28,7 @@ $(document)
     })
 ;
 
-function getPersonalProfile() {
+function getPersonalProfile(userId) {
     // Find cookie id
     // let cookie_id = getCookieId();
 
@@ -43,7 +38,7 @@ function getPersonalProfile() {
     else {
         $.ajax({
             type: "GET",
-            url: `/profile/${cookie_id}`,
+            url: `/profile/${userId}`,
             //data: id_token,
             success: (data, text) => {
                 // .. call function to set html fields to returned data
@@ -57,32 +52,5 @@ function getPersonalProfile() {
 }
 
 function fillPersonalProfilePage(data) {
-    // Find elements en fill them with data.
-}
-
-function getProfile(id = undefined) {
-
-    // No Cookie found and no Id given.
-    if(id === undefined) {
-        console.log('No user to be found, no id.');
-    }
-    // Cookie or Id given, search for profile.
-    else {
-        $.ajax({
-            type: "GET",
-            url: `/profile/${id}`,
-            //data: id_token,
-            success: (data, text) => {
-                // .. call function to set html fields to returned data
-                fillProfilePage(data);
-            },
-            error: (request, status, error) => {
-                // .. show fallback html page to ask the person to log in.
-            }
-        });
-    }  
-}
-
-function fillProfilePage(data) {
     // Find elements en fill them with data.
 }

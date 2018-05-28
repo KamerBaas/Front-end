@@ -7,6 +7,9 @@ function onSignIn(googleUser) {
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
 
+    var id = profile.getId();
+    localStorage.setItem('user_id', id);
+
     var xhr = new XMLHttpRequest();
     xhr.open('POST', URL_AUTHENTICATION_SERVICE);
     xhr.setRequestHeader('Content-Type', 'application/json');
