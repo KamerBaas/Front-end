@@ -35,6 +35,9 @@ $(document)
         fetch(URL_DETAILED_PROFILE_SERVICE + $.urlParam('id'))
             .then(ShowLoadingIcon())
             .then(function (response) {
+
+                //Session ID check with Google user ID.
+
                 if (response.status !== 200) {
                     SetMessage("Error, status code: " + response.status);
                     return;
