@@ -18,10 +18,10 @@ const URL_DETAILED_PROFILE_SERVICE = 'http://gateway.kamerbaas.nl/search?term=';
 
 $(document)
     .ready(() => {
-        $('.ui.selection.dropdown').dropdown();
-        $('#example2').calendar({
-            type: 'date'
-        });
+        // $('.ui.selection.dropdown').dropdown();
+        //         // $('#example2').calendar({
+        //         //     type: 'date'
+        //         // });
 
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -33,17 +33,21 @@ $(document)
 
 
         fetch(URL_DETAILED_PROFILE_SERVICE + $.urlParam('id'))
-            .then(ShowLoadingIcon())
             .then(function (response) {
-
-                //Session ID check with Google user ID.
 
                 if (response.status !== 200) {
                     SetMessage("Error, status code: " + response.status);
                     return;
                 }
+
+                //Session ID check with Google user ID.
                 response.json().then(function (data) {
-                    HandleResponse(data.hits);
+                    // Zelfde ID:
+                    //HandleEditableProfileResponse(data.hits);
+
+
+                    // Andere ID:
+                    HandleProfileDetailResponse(data.hits);
                 });
             }).catch(function () {
             SetMessage('Network error.');
@@ -77,31 +81,41 @@ $.urlParam = function(name){
     return results[1] || 0;
 };
 
-function HandleResponse(profile_list){
-    if(profile_list.length > 0){
-        document.getElementById('profileform').innerHTML = '';
-        for(var i = 0; i < profile_list.length; i++)
-        {
-            var to_show_object = {
-                isLandlord: profile_list[i].isLandlord,
-                name: profile_list[i].name,
-                title: profile_list[i].title,
-                description: profile_list[i].description,
-                gender: profile_list[i].gender,
-                dateOfBirth: profile_list[i].dateOfBirth,
-                spokenLanguages: profile_list[i].spokenLanguages,
-                livesInCountry: profile_list[i].livesInCountry,
-                residence: profile_list[i].residence,
-                status: profile_list[i].status,
-                smokeInHouse: profile_list[i].smokeInHouse,
-                studentenVereniging: profile_list[i].studentenVereniging,
-                educationLevel: profile_list[i].educationLevel
-            };
-        }
-        AddProfile(to_show_object);
-    } else {
-        SetMessage('Geen resultaten.')
-    }
+
+function HandleEditableProfileResponse(profile_list){
+    document.getElementById('nameText').value = profile_list[0].name;
+    document.getElementById('descriptionText').value = profile_list[0].description;
+    document.getElementById('geslachtDropdown').value = profile_list[0].gender;
+    document.getElementById('dateOfBirthText').value = profile_list[0].dateOfBirth;
+    document.getElementById('languagesText').value = profile_list[0].spokenLanguages;
+    document.getElementById('countryText').value = profile_list[0].livesInCountry;
+    document.getElementById('statusDropdown').value = profile_list[0].status;
+    document.getElementById('rokerDropdown').value = profile_list[0].smokeInHouse;
+    document.getElementById('verenigingText').value = profile_list[0].studentenVereniging;
+    document.getElementById('opleidingsniveauText').value = profile_list[0].educationLevel;
+}
+
+
+
+
+function HandleProfileDetailResponse(profile_list){
+    document.getElementById('profileform').innerHTML = '';
+    var to_show_object = {
+        isLandlord: profile_list[0].isLandlord,
+        name: profile_list[0].name,
+        title: profile_list[0].title,
+        description: profile_list[0].description,
+        gender: profile_list[0].gender,
+        dateOfBirth: profile_list[0].dateOfBirth,
+        spokenLanguages: profile_list[0].spokenLanguages,
+        livesInCountry: profile_list[0].livesInCountry,
+        residence: profile_list[0].residence,
+        status: profile_list[0].status,
+        smokeInHouse: profile_list[0].smokeInHouse,
+        studentenVereniging: profile_list[0].studentenVereniging,
+        educationLevel: profile_list[0].educationLevel
+        };
+    AddProfile(to_show_object);
 }
 
 
