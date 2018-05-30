@@ -31,52 +31,66 @@
         <div class="page-header">
             <h1>Profiel informatie</h1>
         </div>
-        <div class="ui text container" id="profileform">
+        <form class="ui form" id="profileform">
             <h4 class="ui attached top block header">Volledige naam</h4>
-            <div class="ui attached segment">
-                {{User.fullName}}
+            <div class="ui attached segment input">
+                <input type="text" id="nameText">
             </div>
             <h4 class="ui attached block header">Beschrijving</h4>
-            <div class="ui attached segment">
-                Wat nou als hier een hele lange beschrijving komt? Wat nou als hier een hele lange beschrijving komt?Wat nou als hier een hele lange beschrijving komt?Wat nou als hier een hele lange beschrijving komt?Wat nou als hier een hele lange beschrijving komt?Wat nou als hier een hele lange beschrijving komt?Wat nou als hier een hele lange beschrijving komt?Wat nou als hier een hele lange beschrijving komt?Wat nou als hier een hele lange beschrijving komt?
+            <div class="ui attached segment input">
+                <input type="text" id="descriptionText">
             </div>
             <h4 class="ui attached block header">Geslacht</h4>
-            <div class="ui attached segment">
-                {{User.gender}}
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="geslachtDropdown">
+                    <option value="man">Man</option>
+                    <option value="vrouw">Vrouw</option>
+                    <option value="anders">Anders</option>
+                </select>
             </div>
             <h4 class="ui attached block header">Geboortedatum</h4>
-            <div class="ui attached segment">
-                {{User.geboorteDatum}}
+            <div class="ui attached segment input">
+                <input type="text" id="dateOfBirthText">
             </div>
             <h4 class="ui attached block header">Gesproken talen</h4>
-            <div class="ui attached segment">
-                {{User.gesprokenTalen}} // in for-loop
+            <div class="ui attached segment input">
+                <input type="text" id="languagesText">
             </div>
             <h4 class="ui attached block header">Land</h4>
-            <div class="ui attached segment">
-                {{User.land}}
-            </div>
-            <h4 class="ui attached block header">Woonplaats</h4>
-            <div class="ui attached segment">
-                {{User.woonplaats}}
+            <div class="ui attached segment input">
+                <input type="text" id="countryText">
             </div>
             <h4 class="ui attached block header">Status</h4>
-            <div class="ui attached segment">
-                {{User.status}}
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="statusDropdown">
+                    <option value="Gehuwd">Gehuwd</option>
+                    <option value="Ongehuwd">Ongehuwd</option>
+                    <option value="Gescheiden">Gescheiden</option>
+                    <option value="Verweduwd">Verweduwd</option>
+                </select>
             </div>
             <h4 class="ui attached block header">Roker</h4>
-            <div class="ui attached segment">
-                {{User.roker}}
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="rokerDropdown">
+                    <option value="ja">Ja</option>
+                    <option value="soms">Soms</option>
+                    <option value="nee">Nee</option>
+                </select>
             </div>
             <h4 class="ui attached block header">Studentenvereniging</h4>
-            <div class="ui attached segment">
-                {{User.studentenVereniging}}
+            <div class="ui attached segment input">
+                <input type="text" id="verenigingText">
             </div>
             <h4 class="ui attached block header">Opleidingsniveau</h4>
-            <div class="ui attached bottom segment">
-                {{User.opleidingsNiveau}}
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="opleidingsniveauText">
+                    <option value="mbo">MBO</option>
+                    <option value="hbo">HBO</option>
+                    <option value="wo">WO</option>
+                </select>
             </div>
-        </div>
+            <button class="ui button primary massive fluid">Opslaan</button>
+        </form>
     </section>
     <div class="ui inverted vertical footer segment">
         <div class="ui container">
