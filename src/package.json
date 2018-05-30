@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "startwatch": "concurrently \"node index.js\" \"npm run watch\" ",
+    "dev": "nodemon index.js",
+    "watch": "babel public/js --plugins transform-class-properties --presets env --out-dir public -watch"
   },
   "author": "Dimitri Hooftman",
   "license": "ISC",

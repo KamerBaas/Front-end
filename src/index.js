@@ -24,7 +24,6 @@ app.get('/profile', function(req, res) {
 app.use('/semantic', express.static('semantic'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/semantic/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use('/node_modules/semantic-ui-calendar/', express.static(__dirname + '/node_modules/semantic-ui-calendar/'));
 
 app.use(express.static('public'));
 

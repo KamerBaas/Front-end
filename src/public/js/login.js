@@ -1,4 +1,6 @@
-const URL_AUTHENTICATION_SERVICE = 'http://gateway.kamerbaas.nl/auth/';
+//const URL_AUTHENTICATION_SERVICE = 'http://gateway.kamerbaas.nl/auth/';
+//const CircularJSON = require('circular-json');
+const URL_AUTHENTICATION_SERVICE = 'http://192.168.99.100:8081/handler.php';
 
 //let user;
 var config = {
@@ -20,13 +22,45 @@ $(document).ready(() => {
 
 const signIn = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(() => {
-        window.location = "/profile";
+    firebase.auth().signInWithPopup(provider).then((result) => {
+        //window.location = "/profile";
+        // var idToken = getIdToken();
+        // console.log(getIdToken());
+        // var jsonToken = { "token": idToken }
+        // var token = firebase.auth().currentUser.getIdToken(false);
+        // //var token = result.credential.accessToken;
+        // console.log(token);
+
+        // var tokenId = {
+        //     "tokenid": token
+        // };
+        firebase.auth().currentUser.getIdToken(true).then(result => {
+            console.log(result);
+            fetch(URL_AUTHENTICATION_SERVICE, { 
+                method: 'POST', 
+                headers: { 'content-type': 'application/json' }, 
+                mode: 'cors',
+                body: JSON.stringify(result)
+            })
+            .then(data => {
+                console.log(data);
+                data.json()
+                    .then(json => console.log(json));
+            }); 
+        });
+        //console.log(data);
     }).catch((error) => {
         console.error(error.message);
     });
+    
 }
 
 const getIdToken = () => {
-    return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(idtoken => {
+        console.log(idtoken);
+        return idtoken;
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
 }
