@@ -49,15 +49,13 @@ function AddCard(object){
         '                </div>\n' +
         '                <div class=\'mc-description\'>\n' +
         '                    ' + object.description +
+        '                    <p><a href="/profile?id=' + object.name + '">Details</a></p>\n' +
         '                </div>\n' +
         '            </div>\n' +
         '            <a class=\'mc-btn-action\'>\n' +
         '                <i class=\'fa fa-bars\'></i>\n' +
         '            </a>\n' +
         '            <div class=\'mc-footer\'>\n' +
-        '                <h4>\n' +
-        '                    Connect\n' +
-        '                </h4>\n' +
         '                <a class=\'fa fa-fw fa-envelope\'></a>\n' +
         '            </div>\n' +
         '        </article>\n';
