@@ -4,7 +4,7 @@
   "description": "Simple server that delivers static HTML page",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "startwatch": "concurrently \"node index.js\" \"npm run watch\" ",
     "dev": "nodemon index.js",
     "watch": "babel public/js --plugins transform-class-properties --presets env --out-dir public -watch"

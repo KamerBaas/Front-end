@@ -35,7 +35,7 @@ const signIn = () => {
         //     "tokenid": token
         // };
         firebase.auth().currentUser.getIdToken(true).then(result => {
-            console.log(result);
+            
             fetch(URL_AUTHENTICATION_SERVICE, { 
                 method: 'POST', 
                 headers: { 'content-type': 'application/json' }, 
@@ -43,12 +43,26 @@ const signIn = () => {
                 body: JSON.stringify(result)
             })
             .then(data => {
-                console.log(data);
                 data.json()
-                    .then(json => console.log(json));
+                    .then(json => {
+                        console.log(json);
+                        
+                        });
+                        // 
+                        // $("#profile").attr("href", `/profile/${userid}`);
+                    });
             }); 
         });
-        //console.log(data);
+        var userid = firebase.auth().currentUser.uid;
+        firebase.auth().currentUser.getIdToken(true).then(result => {
+            console.log(result);
+            fetch(`http://localhost:3000/profile/?idtoken=${result}`, {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({
+                    userid: userid
+                })
+            }).then(data => console.log(data));
     }).catch((error) => {
         console.error(error.message);
     });
