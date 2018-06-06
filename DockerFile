@@ -17,3 +17,5 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "npm", "run start" ]
+
+# Extra comment so I can actually push namechange of file to Github
