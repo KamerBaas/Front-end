@@ -4,24 +4,21 @@
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="css/search.css">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script src="/jquery/jquery.js"></script>
     <script src="semantic/dist/semantic.min.js"></script>
     <script src="/js/search.js"></script>
     <script src="/js/login.js"></script>
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
-
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="818816058543-u44dr7g6nvcum89npch966mhp5oi29q6.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
         <div class="ui container">
             <div class="ui huge secondary inverted pointing menu">
-                <a class="toc item"><i class="sidebar icon"></i></a><a href="/" class="item"><i class='fa fa-fw fa-home'></i>Home</a><a class="active item"><i class='fa fa-fw fa-search'></i>Zoeken</a><a href="/profile" class="item"><i class='fa fa-fw fa-user-circle'></i>Profiel</a>
+                <a class="toc item"><i class="sidebar icon"></i></a><a href="/" class="item"><i class='fa fa-fw fa-home'></i>Home</a><a href="/search" class="active item"><i class='fa fa-fw fa-search'></i>Zoeken</a><a href="/profile" id="profile" class="item"><i class='fa fa-fw fa-user-circle'></i>Profiel</a>
                 <div class="right item">
-                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                    <div><a id="loginButton" href="#">Login</a></div>
                 </div>
             </div>
         </div>

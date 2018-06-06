@@ -2,6 +2,11 @@ const URL_SEARCH_SERVICE = 'http://gateway.kamerbaas.nl/search?term=';
 
 $(document)
     .ready(function() {
+        let userId = localStorage.getItem('userId');
+        if(userId !== null) {
+            $("#profile").attr("href", `/profile/?id=${userId}`);
+            $("#loginButton").html("Logout");
+        }
         document.getElementById('btn-search').onclick = function(e){
             e.preventDefault();
             if(document.getElementById('search-input').value !== ''){
@@ -13,6 +18,7 @@ $(document)
                             return;
                         }
                         response.json().then(function(data) {
+                            console.log(data.hits);
                             HandleResponse(data.hits);
                         });
                     }).catch(function() {
@@ -49,7 +55,7 @@ function AddCard(object){
         '                </div>\n' +
         '                <div class=\'mc-description\'>\n' +
         '                    ' + object.description +
-        '                    <p><a href="/profile?id=' + object.name + '">Details</a></p>\n' +
+        '                    <p><a href="/profile?id=' + object.objectID + '">Details</a></p>\n' +
         '                </div>\n' +
         '            </div>\n' +
         '            <a class=\'mc-btn-action\'>\n' +
@@ -78,6 +84,7 @@ function HandleResponse(profile_list){
         for(var i = 0; i < profile_list.length; i++)
         {
             var to_show_object = {
+                objectID: profile_list[i].objectID,
                 name: profile_list[i].name,
                 bio: profile_list[i].bio,
                 url: 'https://christianlifecoachnow.com/wp-content/uploads/2016/12/Blank-Photo-768x768.png',

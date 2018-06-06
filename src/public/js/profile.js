@@ -18,49 +18,87 @@ const URL_DETAILED_PROFILE_SERVICE = 'http://gateway.kamerbaas.nl/search?term=';
 
 $(document)
     .ready(() => {
+        $('#profileform').hide();
         // $('.ui.selection.dropdown').dropdown();
         //         // $('#example2').calendar({
         //         //     type: 'date'
         //         // });
+        let loggedInUserId = localStorage.getItem('userId');
+        if(loggedInUserId !== null) {
+            $("#loginButton").html("Logout");
+            $("#profile").attr("href", `/profile/?id=${loggedInUserId}`);
+        }
 
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                getUserFromServer(user);
+                getUserFromServer(user).then((profile) => {
+                    console.log(profile);
+                    let loggedInUserId = localStorage.getItem('userId');
+                    console.log(loggedInUserId);
+                    if(profile !== undefined) {
+                        if(loggedInUserId === profile.objectID) {
+                            HandleEditableProfileResponse(profile);
+                        }
+                        else {
+                            HandleProfileDetailResponse(profile);
+                        }
+                    }
+                    else {
+                        HandleNoProfile();
+                    }
+                });
             } else {
                 window.user = undefined;
+                console.log('bla');
             }
         });
 
-
-        fetch(URL_DETAILED_PROFILE_SERVICE + $.urlParam('id'))
-            .then(function (response) {
-
-                if (response.status !== 200) {
-                    SetMessage("Error, status code: " + response.status);
-                    return;
-                }
-
-                //Session ID check with Google user ID.
-                response.json().then(function (data) {
-                    // Zelfde ID:
-                    //HandleEditableProfileResponse(data.hits);
-
-
-                    // Andere ID:
-                    HandleProfileDetailResponse(data.hits);
-                });
-            }).catch(function () {
-            SetMessage('Network error.');
+        $('#opslaan_button').click((e) => {
+            e.preventDefault();
+            let profile = formInputObject();
+            console.log(profile);
+            postUserToServer(profile);
         });
+
+
+        // fetch(URL_DETAILED_PROFILE_SERVICE + $.urlParam('id'))
+        //     .then(function (response) {
+
+        //         if (response.status !== 200) {
+        //             SetMessage("Error, status code: " + response.status);
+        //             return;
+        //         }
+
+        //         //Session ID check with Google user ID.
+        //         response.json().then(function (data) {
+        //             // Zelfde ID:
+        //             //HandleEditableProfileResponse(data.hits);
+
+
+        //             // Andere ID:
+        //             HandleProfileDetailResponse(data.hits);
+        //         });
+        //     }).catch(function () {
+        //     SetMessage('Network error.');
+        // });
     })
 ;
 
-const getUserFromServer = (user) => {
-    return getIdToken().then((idtoken) => {
+const postUserToServer = (user) => {
+    return firebase.auth().currentUser.getIdToken(true).then((idtoken) => {
+        var userid = $.urlParam('id');
+
+        if(userid === null) {
+            return;
+        }
+        
         return new Promise((resolve, reject) => {
+            console.log(user);
             $.ajax({
-                type: "GET",
-                url: "http://gateway.kamerbaas.nl/profile/" + user.uid + "/?idtoken=" + idtoken,
+                type: "POST",
+                url: "http://localhost:3000/profile/" + userid + "/?idtoken=" + idtoken,
+                contentType: 'application/json',
+                data: JSON.stringify(user),
                 success: (data, text) => {
                     resolve(data);
                 },
@@ -76,23 +114,69 @@ const getUserFromServer = (user) => {
     })
 };
 
+const getUserFromServer = (user) => {
+    return firebase.auth().currentUser.getIdToken(true).then((idtoken) => {
+        var userid = $.urlParam('id');
+        if(userid === null) {
+            return;
+        }
+        return new Promise((resolve, reject) => {
+            ShowLoadingIcon();
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:3000/profile/" + userid + "/?idtoken=" + idtoken,
+                success: (data, text) => {
+                    resolve(data);
+                },
+                error: (req, status, error) => {
+                    reject(error);
+                }
+            });
+        }).then((userData) => {
+            return userData.profile;
+        }).catch((err) => {
+            console.error(err.message);
+        })
+    })
+};
+
 $.urlParam = function(name){
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    return results[1] || 0;
+    if(results !== null) {
+        return results[1] || 0;
+    }
 };
+
+function formInputObject() {
+    var profile = {};
+    profile.name = document.getElementById('nameText').value;
+    profile.description = document.getElementById('descriptionText').value;
+    profile.gender = document.getElementById('geslachtDropdown').value;
+    profile.dateOfBirth = document.getElementById('dateOfBirthText').value;
+    profile.spokenLanguages = document.getElementById('languagesText').value;
+    profile.livesInCountry = document.getElementById('countryText').value;
+    profile.status = document.getElementById('statusDropdown').value;
+    profile.smokeInHouse = document.getElementById('rokerDropdown').value;
+    profile.studentenVereniging = document.getElementById('verenigingText').value;
+    profile.educationLevel = document.getElementById('opleidingsniveauText').value;
+
+    return profile;
+}
 
 
 function HandleEditableProfileResponse(profile_list){
-    document.getElementById('nameText').value = profile_list[0].name;
-    document.getElementById('descriptionText').value = profile_list[0].description;
-    document.getElementById('geslachtDropdown').value = profile_list[0].gender;
-    document.getElementById('dateOfBirthText').value = profile_list[0].dateOfBirth;
-    document.getElementById('languagesText').value = profile_list[0].spokenLanguages;
-    document.getElementById('countryText').value = profile_list[0].livesInCountry;
-    document.getElementById('statusDropdown').value = profile_list[0].status;
-    document.getElementById('rokerDropdown').value = profile_list[0].smokeInHouse;
-    document.getElementById('verenigingText').value = profile_list[0].studentenVereniging;
-    document.getElementById('opleidingsniveauText').value = profile_list[0].educationLevel;
+    $('#profileform').show();
+    document.getElementById('temp_filler').innerHTML = '';
+    document.getElementById('nameText').value = profile_list.name;
+    document.getElementById('descriptionText').value = profile_list.description;
+    document.getElementById('geslachtDropdown').value = profile_list.gender;
+    document.getElementById('dateOfBirthText').value = profile_list.dateOfBirth;
+    document.getElementById('languagesText').value = profile_list.spokenLanguages;
+    document.getElementById('countryText').value = profile_list.livesInCountry;
+    document.getElementById('statusDropdown').value = profile_list.status;
+    document.getElementById('rokerDropdown').value = profile_list.smokeInHouse;
+    document.getElementById('verenigingText').value = profile_list.studentenVereniging;
+    document.getElementById('opleidingsniveauText').value = profile_list.educationLevel;
 }
 
 
@@ -101,25 +185,26 @@ function HandleEditableProfileResponse(profile_list){
 function HandleProfileDetailResponse(profile_list){
     document.getElementById('profileform').innerHTML = '';
     var to_show_object = {
-        isLandlord: profile_list[0].isLandlord,
-        name: profile_list[0].name,
-        title: profile_list[0].title,
-        description: profile_list[0].description,
-        gender: profile_list[0].gender,
-        dateOfBirth: profile_list[0].dateOfBirth,
-        spokenLanguages: profile_list[0].spokenLanguages,
-        livesInCountry: profile_list[0].livesInCountry,
-        residence: profile_list[0].residence,
-        status: profile_list[0].status,
-        smokeInHouse: profile_list[0].smokeInHouse,
-        studentenVereniging: profile_list[0].studentenVereniging,
-        educationLevel: profile_list[0].educationLevel
+        isLandlord: profile_list.isLandlord,
+        name: profile_list.name,
+        title: profile_list.title,
+        description: profile_list.description,
+        gender: profile_list.gender,
+        dateOfBirth: profile_list.dateOfBirth,
+        spokenLanguages: profile_list.spokenLanguages,
+        livesInCountry: profile_list.livesInCountry,
+        residence: profile_list.residence,
+        status: profile_list.status,
+        smokeInHouse: profile_list.smokeInHouse,
+        studentenVereniging: profile_list.studentenVereniging,
+        educationLevel: profile_list.educationLevel
         };
     AddProfile(to_show_object);
 }
 
 
 function AddProfile(object){
+    document.getElementById('temp_filler').innerHTML = '';
     var div = document.createElement('div');
     div.innerHTML =
         '       <h4 class="ui attached top block header">Volledige naam</h4>\n' +
@@ -146,11 +231,22 @@ function AddProfile(object){
     document.getElementById('profileform').appendChild(div);
 }
 
+function HandleNoProfile() {
+    document.getElementById('temp_filler').innerHTML = '';
+    $('#profileform').hide();
+    
+    var div = document.createElement('div');
+    div.innerHTML = 'No Profile to be found.';
+
+    document.getElementById('temp_filler').appendChild(div);
+}
+
 
 function ShowLoadingIcon(){
-    document.getElementById('profileform').innerHTML = '';
+    document.getElementById('temp_filler').innerHTML = '';
+    $('#profileform').hide();
     var div = document.createElement('div');
     div.className = 'loader';
 
-    document.getElementById('profileform').appendChild(div);
+    document.getElementById('temp_filler').appendChild(div);
 }

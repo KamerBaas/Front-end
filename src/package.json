@@ -12,7 +12,7 @@
   "author": "Dimitri Hooftman",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.5"
   },
   "dependencies": {
     "express": "^4.16.3",

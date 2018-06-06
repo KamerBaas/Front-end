@@ -16,11 +16,25 @@ firebase.initializeApp(config);
 $(document).ready(() => {
     $('#loginButton').click((e) => {
         e.preventDefault();
-        signIn();
+        let userId = localStorage.getItem('userId');
+        if(userId) signOut();
+        else signIn();
     })
 });
 
+const signOut = () => {
+    $("#loginButton").html("...");
+    firebase.auth().signOut().then(function() {
+        localStorage.removeItem('userId');
+        $("#profile").attr("href", `/profile`);
+        $("#loginButton").html("Login");
+      }).catch(function(error) {
+        $("#loginButton").html("Logout");
+      });
+}
+
 const signIn = () => {
+    $("#loginButton").html("...");
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then((result) => {
         //window.location = "/profile";
@@ -46,25 +60,16 @@ const signIn = () => {
                 data.json()
                     .then(json => {
                         console.log(json);
-                        
+                            var userid = firebase.auth().currentUser.uid;
+                            localStorage.setItem('userId', userid);
+                            $("#profile").attr("href", `/profile/?id=${userid}`);
+                            $("#loginButton").html("Logout");
                         });
-                        // 
-                        // $("#profile").attr("href", `/profile/${userid}`);
                     });
             }); 
-        });
-        var userid = firebase.auth().currentUser.uid;
-        firebase.auth().currentUser.getIdToken(true).then(result => {
-            console.log(result);
-            fetch(`http://localhost:3000/profile/?idtoken=${result}`, {
-                method: 'POST',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify({
-                    userid: userid
-                })
-            }).then(data => console.log(data));
-    }).catch((error) => {
-        console.error(error.message);
+        }).catch((error) => {
+            $("#loginButton").html("Login");
+            console.error(error.message);
     });
     
 }
