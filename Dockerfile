@@ -8,7 +8,8 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY /src/package*.json ./
 
-RUN npm install gulp && npm install
+RUN npm install gulp
+RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
 
