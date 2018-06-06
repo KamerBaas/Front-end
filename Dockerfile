@@ -1,4 +1,4 @@
-FROM node:carbon
+FROM node:alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY /src/package*.json ./
 
-RUN npm install gulp -g && npm install
+RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
 
