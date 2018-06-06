@@ -1,6 +1,6 @@
-//const URL_AUTHENTICATION_SERVICE = 'http://gateway.kamerbaas.nl/auth/';
+const URL_AUTHENTICATION_SERVICE = 'http://gateway.kamerbaas.nl/auth/';
 //const CircularJSON = require('circular-json');
-const URL_AUTHENTICATION_SERVICE = 'http://192.168.99.100:8081/handler.php';
+//const URL_AUTHENTICATION_SERVICE = 'http://192.168.99.100:8081/handler.php';
 
 //let user;
 var config = {

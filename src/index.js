@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-const PORT = 8082;
+const PORT = 8080;
 const HOST = '0.0.0.0';
 
 app.get('/', function(req, res) {

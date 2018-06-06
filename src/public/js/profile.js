@@ -15,6 +15,7 @@
 // });
 
 const URL_DETAILED_PROFILE_SERVICE = 'http://gateway.kamerbaas.nl/search?term=';
+const URL_PROFILE_SERVICE = 'http://gateway.kamerbaas.nl/profile'
 
 $(document)
     .ready(() => {
@@ -96,7 +97,7 @@ const postUserToServer = (user) => {
             console.log(user);
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/profile/" + userid + "/?idtoken=" + idtoken,
+                url: URL_PROFILE_SERVICE + "/" + userid + "/?idtoken=" + idtoken,
                 contentType: 'application/json',
                 data: JSON.stringify(user),
                 success: (data, text) => {
@@ -124,7 +125,7 @@ const getUserFromServer = (user) => {
             ShowLoadingIcon();
             $.ajax({
                 type: "GET",
-                url: "http://localhost:3000/profile/" + userid + "/?idtoken=" + idtoken,
+                url: URL_PROFILE_SERVICE + "/" + userid + "/?idtoken=" + idtoken,
                 success: (data, text) => {
                     resolve(data);
                 },
