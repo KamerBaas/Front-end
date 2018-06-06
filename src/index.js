@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-const PORT = 8080;
+const PORT = 8082;
 const HOST = '0.0.0.0';
 
 app.get('/', function(req, res) {
@@ -21,10 +21,13 @@ app.get('/profile', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/profile.html'));
 });
 
+app.get('/profile/:id', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/profile.html'));
+});
+
 app.use('/semantic', express.static('semantic'));
-app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use('/semantic/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use('/node_modules/semantic-ui-calendar/', express.static(__dirname + '/node_modules/semantic-ui-calendar/'));
+app.use('/jquery', express.static(path.join(__dirname + '/node_modules/jquery/dist/')));
+app.use('/semantic/jquery', express.static(path.join(__dirname + '/node_modules/jquery/dist/')));
 
 app.use(express.static('public'));
 

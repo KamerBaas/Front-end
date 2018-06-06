@@ -4,18 +4,20 @@
   "description": "Simple server that delivers static HTML page",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "nodemon index.js",
+    "startwatch": "concurrently \"node index.js\" \"npm run watch\" ",
+    "dev": "nodemon index.js",
+    "watch": "babel public/js --plugins transform-class-properties --presets env --out-dir public -watch"
   },
   "author": "Dimitri Hooftman",
   "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  },
   "dependencies": {
     "express": "^4.16.3",
     "jquery": "^3.3.1",
     "semantic-ui": "^2.3.1",
     "semantic-ui-calendar": "0.0.8"
-  },
-  "devDependencies": {
-    "nodemon": "^1.17.3"
   }
 }

@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/search.css">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script src="/jquery/jquery.js"></script>
-    <script src="semantic/dist/semantic.min.js"></script>
+    <script src="/semantic/dist/semantic.min.js"></script>
     <script src="/js/login.js"></script>
     <script src="/js/profile.js"></script>
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
-    <script type="text/javascript" src="/node_modules/semantic-ui-calendar/dist/calendar.min.js"></script>
-    <link rel="stylesheet" href="/node_modules/semantic-ui-calendar/dist/calendar.min.css" />
 </head>
 <body>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
         <div class="ui container">
             <div class="ui huge secondary inverted pointing menu">
-                <a class="toc item"><i class="sidebar icon"></i></a><a href="/" class="item"><i class='fa fa-fw fa-home'></i>Home</a><a href="/search" class="item"><i class='fa fa-fw fa-search'></i>Zoeken</a><a class="active item"><i class='fa fa-fw fa-user-circle'></i>Profiel</a>
+                <a class="toc item"><i class="sidebar icon"></i></a><a href="/" class="item"><i class='fa fa-fw fa-home'></i>Home</a><a href="/search" class="item"><i class='fa fa-fw fa-search'></i>Zoeken</a><a href="/profile" id="profile" class="active item"><i class='fa fa-fw fa-user-circle'></i>Profiel</a>
                 <div class="right item">
-                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                    <div><a id="loginButton" href="#">Login</a></div>
                 </div>
             </div>
         </div>
@@ -28,128 +27,69 @@
         <div class="page-header">
             <h1>Profiel informatie</h1>
         </div>
-        <div class="row active-with-click">
-            <form class="ui form">
-                <div class="two fields">
-                    <div class="field">
-                        <label>Volledige Naam</label>
-                        <div class="field">
-                            <input type="text" name="shipping[full-name]" placeholder="Volledige naam">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Profiel naam</label>
-                        <div class="field">
-                            <input type="text" name="shipping[first-name]" placeholder="First Name">
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Beschrijving</label>
-                    <div class="field">
-                        <textarea placeholder="Beschrijving" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="ui form">
-                    <div class="four fields">
-                        <div class="field">
-                            <label>Geslacht</label>
-                            <div class="ui selection dropdown">
-                                <input type="hidden" name="gender">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">Geslacht</div>
-                                <div class="menu">
-                                    <div class="item" data-value="2">Man</div>
-                                    <div class="item" data-value="1">Vrouw</div>
-                                    <div class="item" data-value="0">Anders</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label>Geboorte Datum</label>
-                            <div class="ui calendar" id="example2">
-                                <div class="ui input left icon">
-                                    <i class="calendar icon"></i>
-                                    <input type="text" placeholder="Datum">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label>Gesproken Talen</label>
-                            <select multiple="" class="ui selection dropdown">
-                                <option value="">Taal</option>
-                                <option value="NL">Nederlands</option>
-                                <option value="EN">Engels</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label>Land</label>
-                            <select multiple="" class="ui selection dropdown">
-                                <option value="">Land</option>
-                                <option value="NL">Nederland</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="five fields">
-                    <div class="field">
-                        <label>Woonplaats</label>
-                        <select multiple="" class="ui selection dropdown">
-                        <option value="">Taal</option>
-                        <option value="UT">Utrecht</option>
-                        <option value="AM">Amsterdam</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Status</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Status</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Student</div>
-                                <div class="item" data-value="2">Werkende student</div>
-                                <div class="item" data-value="3">Werkzoekende student</div>
-                                <div class="item" data-value="4">Werkend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Roker</label>
-                        <select class="ui selection dropdown">
-                            <option value="">Keuze</option>
-                            <option value="1">Ja</option>
-                            <option value="0">Nee</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Studentenvereneging</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="ferternety">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Studentenvereneging</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Ja</div>
-                                <div class="item" data-value="0">Nee</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Opleidingsniveau</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="gender">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Opleidingsniveau</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Laag</div>
-                                <div class="item" data-value="0">Hoog</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui button" tabindex="0">Profiel Opslaan</div>
-            </form>
+        <div id="temp_filler">
+            
         </div>
+        <form class="ui form" id="profileform">
+            <h4 class="ui attached top block header">Volledige naam</h4>
+            <div class="ui attached segment input">
+                <input type="text" id="nameText">
+            </div>
+            <h4 class="ui attached block header">Beschrijving</h4>
+            <div class="ui attached segment input">
+                <input type="text" id="descriptionText">
+            </div>
+            <h4 class="ui attached block header">Geslacht</h4>
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="geslachtDropdown">
+                    <option value="man">Man</option>
+                    <option value="vrouw">Vrouw</option>
+                    <option value="anders">Anders</option>
+                </select>
+            </div>
+            <h4 class="ui attached block header">Geboortedatum</h4>
+            <div class="ui attached segment input">
+                <input type="text" id="dateOfBirthText">
+            </div>
+            <h4 class="ui attached block header">Gesproken talen</h4>
+            <div class="ui attached segment input">
+                <input type="text" id="languagesText">
+            </div>
+            <h4 class="ui attached block header">Land</h4>
+            <div class="ui attached segment input">
+                <input type="text" id="countryText">
+            </div>
+            <h4 class="ui attached block header">Status</h4>
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="statusDropdown">
+                    <option value="Gehuwd">Gehuwd</option>
+                    <option value="Ongehuwd">Ongehuwd</option>
+                    <option value="Gescheiden">Gescheiden</option>
+                    <option value="Verweduwd">Verweduwd</option>
+                </select>
+            </div>
+            <h4 class="ui attached block header">Roker</h4>
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="rokerDropdown">
+                    <option value="ja">Ja</option>
+                    <option value="soms">Soms</option>
+                    <option value="nee">Nee</option>
+                </select>
+            </div>
+            <h4 class="ui attached block header">Studentenvereniging</h4>
+            <div class="ui attached segment input">
+                <input type="text" id="verenigingText">
+            </div>
+            <h4 class="ui attached block header">Opleidingsniveau</h4>
+            <div class="ui attached segment input">
+                <select class="ui fluid dropdown" id="opleidingsniveauText">
+                    <option value="mbo">MBO</option>
+                    <option value="hbo">HBO</option>
+                    <option value="wo">WO</option>
+                </select>
+            </div>
+            <button id="opslaan_button" class="ui button primary massive fluid">Opslaan</button>
+        </form>
     </section>
     <div class="ui inverted vertical footer segment">
         <div class="ui container">
