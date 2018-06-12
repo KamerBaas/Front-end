@@ -16,6 +16,6 @@ RUN npm install gulp -g && npm install
 COPY . .
 
 EXPOSE 8080
-CMD [ "npm", "run start" ]
+CMD [ "npm", "start" ]
 
 # Extra comment so I can actually push namechange of file to Github
