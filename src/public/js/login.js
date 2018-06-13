@@ -52,8 +52,7 @@ const signIn = () => {
             
             fetch(URL_AUTHENTICATION_SERVICE, { 
                 method: 'POST', 
-                headers: { 'content-type': 'application/json' }, 
-                mode: 'cors',
+                headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(result)
             })
             .then(data => {
@@ -65,7 +64,15 @@ const signIn = () => {
                             $("#profile").attr("href", `/profile/?id=${userid}`);
                             $("#loginButton").html("Logout");
                         });
+                    })
+                    .catch((error) => {
+                        $("#loginButton").html("Login");
+                        console.error(error.message);
                     });
+            })
+            .catch((error) => {
+                $("#loginButton").html("Login");
+                console.error(error.message);
             }); 
         }).catch((error) => {
             $("#loginButton").html("Login");

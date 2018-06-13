@@ -118,7 +118,7 @@ const postUserToServer = (user) => {
 const getUserFromServer = (user) => {
     return firebase.auth().currentUser.getIdToken(true).then((idtoken) => {
         var userid = $.urlParam('id');
-        if(userid === null) {
+        if(userid === null || userid === undefined) {
             return;
         }
         return new Promise((resolve, reject) => {
