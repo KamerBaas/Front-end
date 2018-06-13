@@ -1,12 +1,12 @@
 FROM node:alpine
 
 # Create app directory
-WORKDIR /src/
+WORKDIR /src/app/src/
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY /src/* /src/
+COPY /src/* /src/app/
 
 RUN npm install gulp -g && npm install
 # If you are building your code for production
