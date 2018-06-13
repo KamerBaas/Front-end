@@ -53,7 +53,7 @@ const signIn = () => {
             fetch(URL_AUTHENTICATION_SERVICE, { 
                 method: 'POST', 
                 headers: { 'content-type': 'application/json' },
-                body: JSON.stringify(result)
+                body: JSON.stringify({idtoken: result})
             })
             .then(data => {
                 console.log(data);
