@@ -56,6 +56,7 @@ const signIn = () => {
                 body: JSON.stringify(result)
             })
             .then(data => {
+                console.log(data);
                 data.json()
                     .then(json => {
                         console.log(json);
@@ -63,16 +64,16 @@ const signIn = () => {
                             localStorage.setItem('userId', userid);
                             $("#profile").attr("href", `/profile/?id=${userid}`);
                             $("#loginButton").html("Logout");
-                        });
-                    })
+                        })
                     .catch((error) => {
                         $("#loginButton").html("Login");
                         console.error(error.message);
                     });
-            })
-            .catch((error) => {
-                $("#loginButton").html("Login");
-                console.error(error.message);
+                })
+                .catch((error) => {
+                    $("#loginButton").html("Login");
+                    console.error(error.message);
+                });
             }); 
         }).catch((error) => {
             $("#loginButton").html("Login");
